@@ -1,0 +1,22 @@
+import numpy as np
+
+x_values, y_values = [], []
+
+with open("data.txt") as f:
+    for line in f:
+        x, y = map(float, line.split())
+        x_values.append(x)
+        y_values.append(y)
+
+A = np.array([[x**2, x, 1] for x in x_values])
+B = np.array(y_values)
+
+a, b, c = np.linalg.solve(A, B)
+print(f"Quadratic model: y = {a:.4f}x^2 + {b:.4f}x + {c:.4f}")
+
+def temperature_at(x):         # quadratic function
+    return a*x**2 + b*x + c
+
+print("\nTemperatures for input hours:")
+for x in x_values:
+    print(f"{int(x):02d}:00 -> {temperature_at(x):.2f}°C")
